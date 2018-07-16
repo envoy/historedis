@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["arunthampi"]
   spec.email         = ["arun.thampi@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Gem which can be used to track/visualize simple stats in Redis}
+  spec.description   = %q{Gem which can be used to track/visualize simple stats in Redis}
+  spec.homepage      = "https://github.com/envoy/historedis.git"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -29,6 +29,8 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_dependency             "redis", "~> 4.0.1"
 
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"

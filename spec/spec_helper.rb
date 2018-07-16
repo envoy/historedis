@@ -1,5 +1,7 @@
 require "bundler/setup"
+require "fakeredis"
 require "historedis"
+require "active_support/core_ext/integer"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

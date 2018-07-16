@@ -1,8 +1,8 @@
 # Historedis
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/historedis`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Historedis is a gem that lets you store counts of variables in Redis,
+all of which are stored in a certain namespace (internally a hash in
+Redis) which you can then query to get a distribution.
 
 ## Installation
 
@@ -22,7 +22,56 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Initializing a Historedis Instance
+
+```ruby
+HISTOREDIS = HistoRedis.new
+```
+
+If you want to specify a Redis URL,
+
+```ruby
+HISTOREDIS = HistoRedis.new(ENV['REDIS_URL'])
+```
+
+### Incrementing a variable
+
+Say you want to track the number of API requests made to an external
+service per request ID, use this API:
+
+```ruby
+HISTOREDIS.increment('external_service.api.count', 'request-id-1')
+```
+
+If you want to keep the data for a certain amount of time, you can do
+this:
+
+```ruby
+HISTOREDIS.increment('external_service.api.count', 'request-id-1', keep_data_for: 12.hours)
+```
+
+### Distribution
+
+Say you have made the following `increment` API calls:
+
+```ruby
+HISTOREDIS.increment('external_service.api.count', 'request-id-1')
+HISTOREDIS.increment('external_service.api.count', 'request-id-1')
+HISTOREDIS.increment('external_service.api.count', 'request-id-2')
+HISTOREDIS.increment('external_service.api.count', 'request-id-3')
+```
+
+Calling `Historedis.distribution('external_service.api.count')` will
+return:
+
+```ruby
+{ 2 => 1, 1 => 2 }
+```
+
+What this distribution indicates that there are two requests which made
+1 call to the external service, (`request-id-2`, `request-id-3`
+respectively) and one request which made 2 calls to the external service
+viz. `request-id-1`
 
 ## Development
 

@@ -30,3 +30,21 @@ RSpec.describe Historedis, '#increment' do
     end
   end
 end
+
+RSpec.describe Historedis, '#distribution' do
+  before do
+    @redis = Redis.new
+    @historedis = Historedis.new
+    @redis.flushall
+  end
+
+  it 'should return a distribution of counts' do
+    @historedis.increment('hello', 'field1')
+    @historedis.increment('hello', 'field1')
+    @historedis.increment('hello', 'field2')
+    @historedis.increment('hello', 'field3')
+    # field2 and field3 both have a value 1, so '1' has 2 objects
+    # field1 has the value 2, so in the distribution, '2' has 1 object
+    expect(@historedis.distribution('hello')).to eql({ 1 => 2, 2 => 1 })
+  end
+end

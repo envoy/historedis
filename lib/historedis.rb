@@ -6,9 +6,10 @@ class Historedis
   end
 
   def increment(key, field, opts = {})
-    @redis.hincrby(key, field, 1)
-    if (keep_data_for = opts[:keep_data_for]) && @redis.ttl(key) < 0
-      @redis.expire(key, keep_data_for)
+    response = @redis.hincrby(key, field, 1)
+
+    if (keep_data_for = opts[:keep_data_for].to_i) > 0
+      @redis.expire(key, keep_data_for) if @redis.ttl(key) < 0
     end
   end
 

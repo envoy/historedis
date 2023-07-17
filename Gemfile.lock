@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     historedis (0.1.0)
-      redis (~> 3.3.5)
+      redis
 
 GEM
   remote: https://rubygems.org/
@@ -19,7 +19,7 @@ GEM
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
-    rake (10.5.0)
+    rake (13.0.6)
     redis (3.3.5)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
@@ -46,7 +46,7 @@ DEPENDENCIES
   bundler (~> 1.16)
   fakeredis (~> 0.7.0)
   historedis!
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
